@@ -10,8 +10,8 @@ WORKDIR /app
 RUN apt-get update && \
 apt-get install apache2 -y 
 
-COPY images /var/www/html/
-COPY styles /var/www/html/
+COPY images /var/www/html/images
+COPY styles /var/www/html/styles
 COPY index.html /var/www/html/
   
 ENTRYPOINT apachectl -D FOREGROUND 
