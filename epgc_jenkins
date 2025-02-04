@@ -1,0 +1,47 @@
+pipeline {
+    agent none
+    environment {
+      DOCKERHUB_CREDENTIALS = credentials("7a331b3e-2f32-42f2-b455-d931de6145a6")   
+    } 
+    stages {
+        stage( 'stage') {
+          agent {
+            label "K8S_Master"
+           }
+           steps {
+             script {
+                git branch: 'gh-pages', url: 'https://github.com/JavidGull/DevOps_EPGC.git'
+              }    
+            }
+        }
+		stage( 'docker_push' ) {
+          agent {
+            label "K8S_Master"
+          }
+          steps {
+            script {
+             sh ''' 
+                sudo docker build . -t javidgull/caps_project02               
+                sudo docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}
+                sudo docker push javidgull/devops_epgc_project
+             '''    
+            }    
+          }
+        }
+        stage( 'K8S_Deploy' ) {
+          agent {
+            label "K8S_Master"
+          }
+          steps {
+            script {
+              dir('data'){
+                sh '''
+                  kubectl delete -f epgc_deploy.yaml  
+                  kubectl apply -f epgc_deploy.yaml
+                '''               
+              }
+            }
+          }
+        }  
+    }
+}
