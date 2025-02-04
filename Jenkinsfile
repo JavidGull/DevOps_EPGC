@@ -2,7 +2,7 @@ pipeline {
     agent none
     stages {
         stage( 'stage' ) {
-          agent { label "prod"}
+          agent { label "prodServer"}
            steps {
              script {
                 git branch: 'gh-pages', url: 'https://github.com/JavidGull/DevOps_EPGC.git' 
@@ -10,7 +10,7 @@ pipeline {
             }
         }
         stage( 'deploy_production' ) {
-           agent {label "prod"}
+           agent {label "prodServer"}
             steps {
               sh '''  
                 # Adding two lines below to stop and then remove the existing container 
