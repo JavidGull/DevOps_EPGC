@@ -1,7 +1,7 @@
 pipeline {
     agent none
     environment {
-      DOCKERHUB_CREDENTIALS = credentials("5a999878-d016-48d2-9ee0-b57e605e52cd")   
+      DOCKERHUB_CREDENTIALS = credentials("15893927-a84b-4b02-ae64-e8a61fd7d63b")   
     } 
     stages {
         stage( 'stage') {
@@ -37,7 +37,7 @@ pipeline {
               dir('data'){
                 sh '''
                   #kubectl delete -f epgc_deploy.yaml  
-                  kubectl create -f --validate=false epgc_deploy.yaml
+                  kubectl create -f epgc_deploy.yaml
                 '''               
               }
             }
