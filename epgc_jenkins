@@ -36,7 +36,7 @@ pipeline {
             script {
               dir('data'){
                 sh '''
-                  kubectl delete -f epgc_deploy.yaml  
+                  #kubectl delete -f epgc_deploy.yaml  
                   kubectl apply -f epgc_deploy.yaml
                 '''               
               }
